@@ -2,41 +2,41 @@ Project Name: Schedule Bot
 
 | Notes | Marks/Points(0-3): Leslie | Marks/Points(0-3): Yi-Ting | Marks/Points(0-3): Deepak | Evidence |
 | :- | :- | :- | :- | :- |
-| Workload is spread over the whole team (one team member is often X times more productive than the others... | 3 | 3 | 3 | [Collaborators Commits Link](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/commits/main/) |
-| But nevertheless, here is a track record that everyone is contributing a lot) | 3 | 3 | 3 | [Collaborators Commits Link](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/commits/main/) |
+| Workload is spread over the whole team (one team member is often X times more productive than the others... | 3 | 3 | 3 | [Collaborators Commits Link](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/commits/fall_2024/) |
+| But nevertheless, here is a track record that everyone is contributing a lot) | 3 | 3 | 3 | [Collaborators Commits Link](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/commits/fall_2024) |
 | Number of commits | 3 | 3 | 3 | commits<br>702 in GH |
 | Number of commits: by different people | 3 | 3 | 3 | <p>Leslie - 13</p><p>Yiting - 4</p><p>Deepak – 4</p><p></p><p>Command: git shortlog -s -n</p> |
 | Issues reports: there are many | 3 | 3 | 3 | <p>0</p><p>[Open Issues](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/issues?q=is%3Aissue+is%3Aopen)</p> |
 | Issues are being closed | 3 | 3 | 3 | <p>4</p><p></p><p>[Closed Issues](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/issues?q=is%3Aissue+is%3Aclosed)</p> |
-| Docs: docs generated, format not ugly | 3 | 3 | 3 | [Documentation](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/docs) |
-| Docs: what: point descriptions of each class/function (in isolation) | 3 | 3 | 3 | [Functionality](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/docs/functionality) |
-| Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z | 3 | 3 | 3 | <p>Screenshots were placed for all the features newly added and placed in the README.md</p><p></p><p>[doc page entries](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/README.md)</p> |
+| Docs: docs generated, format not ugly | 3 | 3 | 3 | [Documentation](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/docs) |
+| Docs: what: point descriptions of each class/function (in isolation) | 3 | 3 | 3 | [Functionality](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/docs/functionality) |
+| Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z | 3 | 3 | 3 | <p>Screenshots were placed for all the features newly added and placed in the README.md</p><p></p><p>[doc page entries](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/README.md)</p> |
 | Docs: why: docs tell a story, motivate the whole thing, deliver a punchline that makes you want to rush out and use the thing | 3 | 3 | 3 | <p>Elaborate documentation, detailed explanation of the functionality and how to use the bot has made it easy to understand and utilize it to its full capacity</p><p></p><p>[Video](https://www.youtube.com/watch?v=n5qEw61pARw)</p> |
-| Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code. | 3 | 3 | 3 | [ReadMe](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/README.md) |
-| Use of version control tools | 3 | 3 | 3 | [Github](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot) |
-| Test cases exist | 3 | 3 | 3 | [CodeCov](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/test) |
-| Test cases are routinely executed | 3 | 3 | 3 | <br>[File1](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/test) |
+| Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code. | 3 | 3 | 3 | [ReadMe](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/README.md) |
+| Use of version control tools | 3 | 3 | 3 | [Github](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024) |
+| Test cases exist | 3 | 3 | 3 | [CodeCov](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/test) |
+| Test cases are routinely executed | 3 | 3 | 3 | <br>[File1](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/test) |
 | Issues are discussed before they are closed | 3 | 3 | 3 | <p>[Discussion1](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/issues/2)</p><p>[Discussion2]()</p><p>[Discussion3]()</p><p>[Discussion4]()</p> |
-| Chat channel: exists | 3 | 3 | 3 | [Chat Channel](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/docs/Discord) |
-| Test cases: a large proportion of the issues related to handling failing cases. | 3 | 3 | 3 | [Test Cases](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/test) |
-| Evidence that the whole team is using the same tools: everyone can get to all tools and files | 3 | 3 | 3 | [CheckCommits](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/requirements.txt) |
-| Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people) | 3 | 3 | 3 | <p>[Requirements.txt](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/requirements.txt) is installed by everyone.</p> |
+| Chat channel: exists | 3 | 3 | 3 | [Chat Channel](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/docs/Discord) |
+| Test cases: a large proportion of the issues related to handling failing cases. | 3 | 3 | 3 | [Test Cases](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/test) |
+| Evidence that the whole team is using the same tools: everyone can get to all tools and files | 3 | 3 | 3 | [CheckCommits](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/requirements.txt) |
+| Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people) | 3 | 3 | 3 | <p>[Requirements.txt](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/requirements.txt) is installed by everyone.</p> |
 | Evidence that the whole team is using the same tools (e.g. tutor can ask anyone to share screen, they demonstrate the system running on their computer) | 3 | 3 | 3 | All the members are using the same tools |
-| Evidence that the members of the team are working across multiple places in the code base | 3 | 3 | 3 | <p>[CheckCommits](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/commits/main/)</p><p></p> |
+| Evidence that the members of the team are working across multiple places in the code base | 3 | 3 | 3 | <p>[CheckCommits](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/commits/fall_2024/)</p><p></p> |
 | Short release cycles | 2 | 2 | 2 | [Graphs](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/graphs/contributors) |
 | The file .gitignore lists what files should not be saved to the repo. See [examples](https://github.com/github/gitignore) | 3 | 3 | 3 | [Gitignore](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/.gitignore) |
-| The file INSTALL.md lists how to install the code | 3 | 3 | 3 | [INSTALL.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/README.md) |
-| The file LICENSE.md lists rules of usage for this repo | 3 | 3 | 3 | [LICENSE.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/LICENSE) |
-| The file CODE-OF-CONDUCT.md lists rules of behavior for this repo; e.g. see example | 3 | 3 | 3 | [CODE-OF-CONDUCT.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/CODE_OF_CONDUCT.md) |
-| The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up; e.g. see example | 3 | 3 | 3 | [CONTRIBUTING.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/CONTRIBUTING.md) |
-| The file README.md contains all the following | 3 | 3 | 3 | [README.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/README.md) |
+| The file INSTALL.md lists how to install the code | 3 | 3 | 3 | [INSTALL.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/README.md) |
+| The file LICENSE.md lists rules of usage for this repo | 3 | 3 | 3 | [LICENSE.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/LICENSE) |
+| The file CODE-OF-CONDUCT.md lists rules of behavior for this repo; e.g. see example | 3 | 3 | 3 | [CODE-OF-CONDUCT.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/CODE_OF_CONDUCT.md) |
+| The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up; e.g. see example | 3 | 3 | 3 | [CONTRIBUTING.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/CONTRIBUTING.md) |
+| The file README.md contains all the following | 3 | 3 | 3 | [README.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/README.md) |
 | Video | 3 | 3 | 3 | <p></p><p>[Youtube Link]()</p> |
-| DOI badge: exists | 3 | 3 | 3 | [ReadMe](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/README.md) |
-| Badges showing your style checkers | 3 | 3 | 3 | [Style Checker](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/checkers) |
-| Badges showing your code formatters | 2 | 2 | 2 | [Formatters](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/checkers) |
-| Badges showing your syntax checkers | 3 | 3 | 3 | [Syntax Checker](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/main/checkers) |
-| Badges showing your code coverage tools | 3 | 3 | 3 | [README.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/README.md) |
-| Other automated analysis tools | 2 | 2 | 2 | [README.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/main/README.md) |
+| DOI badge: exists | 3 | 3 | 3 | [ReadMe](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/README.md) |
+| Badges showing your style checkers | 3 | 3 | 3 | [Style Checker](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/checkers) |
+| Badges showing your code formatters | 2 | 2 | 2 | [Formatters](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/checkers) |
+| Badges showing your syntax checkers | 3 | 3 | 3 | [Syntax Checker](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/checkers) |
+| Badges showing your code coverage tools | 3 | 3 | 3 | [README.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/README.md) |
+| Other automated analysis tools | 2 | 2 | 2 | [README.md](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/blob/fall_2024/README.md) |
 | Q1 - What your software does |   |   |   |   |
 | 1.1) Does your website and documentation provide a clear, high-level overview of your software? | YES | YES | YES |   |
 | 1.2) Does your website and documentation clearly describe the type of user who should use your software? | YES | YES | YES |   |
