@@ -13,10 +13,15 @@ from functionality.shared_functions import create_event_tree, add_event_to_file
 from Event import Event
 
 
+#@pytest.fixture
+#def client(event_loop):
+#    c = discord.Client(loop=event_loop)
+#    test.configure(c)
+#    return c
 @pytest.fixture
 def client(event_loop):
-    c = discord.Client(loop=event_loop)
-    test.configure(c)
+    intents = discord.Intents.default()  # or customize the intents you need
+    c = discord.Client(loop=event_loop, intents=intents)
     return c
 
 
