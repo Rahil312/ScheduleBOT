@@ -489,3 +489,121 @@ Yiting Hou
 Deepak Sai Pendyala
 
 
+# 📜 API Key Guide
+
+To use this application, you need several API keys to connect to different services like Google Cloud, Google AI, Weather APIs, etc. Below are the instructions to obtain these API keys.
+
+## 📌 Table of Contents
+1. [Google Cloud API Key](#google-cloud-api-key)
+2. [Google AI Studio API Key](#google-ai-studio-api-key)
+3. [Weather API Key](#weather-api-key)
+4. [Environment Variable Setup](#environment-variable-setup)
+
+### 1. Google Cloud API Key
+
+To use Google Cloud services, such as machine learning or language translation, follow these steps to get an API key:
+
+1. **Create a Google Cloud Account**:
+   - Go to [Google Cloud Console](https://console.cloud.google.com/).
+   - Sign in or create an account.
+
+2. **Create a Project**:
+   - Click on the project drop-down in the top navigation bar.
+   - Select **"New Project"** and give your project a meaningful name.
+
+3. **Enable an API**:
+   - In the Google Cloud Console, navigate to **APIs & Services** > **Library**.
+   - Search for the API you need (e.g., **Cloud Translation API**, **Cloud Vision API**, etc.) and click **Enable**.
+
+4. **Create API Credentials**:
+   - Navigate to **APIs & Services** > **Credentials**.
+   - Click on **"Create Credentials"** and select **"API Key"**.
+   - Copy the generated API key.
+
+5. **Secure Your Key**:
+   - Click on **"Edit API Key"** to restrict the key usage. Set specific APIs and IP addresses if possible.
+
+### 2. Google AI Studio API Key
+
+For advanced services like PaLM, Gemini, or any other Google AI model, you need an API key specifically from Google AI Studio:
+
+1. **Access Google AI Studio**:
+   - Go to [Google AI Studio](https://aistudio.google.com/).
+
+2. **Create or Select a Project**:
+   - You can either create a new project or select an existing one.
+
+3. **Generate an API Key**:
+   - Click on the project and navigate to **API Key Management**.
+   - Click **"Generate New API Key"**.
+   - Copy the generated key for later use.
+
+4. **Enable Billing** (Required for many services):
+   - To use the Google AI APIs, make sure billing is enabled on your Google Cloud account. Go to the **Billing** section in the [Google Cloud Console](https://console.cloud.google.com/billing).
+
+### 3. Weather API Key
+
+For getting weather data, you can use popular weather services like OpenWeatherMap or Weatherstack:
+
+#### A. OpenWeatherMap API Key
+1. **Sign Up for OpenWeatherMap**:
+   - Go to [OpenWeatherMap](https://openweathermap.org/api).
+   - Create an account if you don’t have one.
+
+2. **Get the API Key**:
+   - After logging in, go to the **API Keys** section under your account settings.
+   - Click **"Generate"** to create a new API key.
+   - Copy this key.
+
+3. **Free Tier**:
+   - OpenWeatherMap offers a **free tier** with some rate limits. You can upgrade to a paid plan for more requests.
+
+#### B. Weatherstack API Key
+1. **Sign Up for Weatherstack**:
+   - Go to [Weatherstack](https://weatherstack.com/).
+   - Create an account and select a plan (they also have a **free plan** for basic usage).
+
+2. **Get the API Key**:
+   - Once logged in, go to your **dashboard** to find your API key.
+   - Copy the key for use.
+
+### 4. Environment Variable Setup
+
+To securely use these API keys in your project, it's a good idea to store them as environment variables. Here’s how:
+
+#### Using `.env` File (Recommended for Local Development)
+1. **Create a `.env` File**:
+   - In your project root directory, create a file named `.env`.
+
+2. **Add Your API Keys**:
+   - Add your keys to the file in folder json like this:
+     ```
+     GOOGLE_CLOUD_API_KEY=your_google_cloud_api_key_here
+     GOOGLE_AI_API_KEY=your_google_ai_api_key_here
+     WEATHER_API_KEY=your_weather_api_key_here
+     ```
+
+3. **Load the Environment Variables in Code**:
+   - Use a library like `dotenv` to load the variables in your code.
+
+   Python example:
+   ```python
+   from dotenv import load_dotenv
+   import os
+
+   load_dotenv()
+
+   google_api_key = os.getenv("GOOGLE_CLOUD_API_KEY")
+   weather_api_key = os.getenv("WEATHER_API_KEY")
+   ```
+
+4. **Replit Secrets (For Replit Users)**:
+   - If you are using Replit, you can save environment variables as secrets:
+     - Click the **padlock icon** on the left sidebar.
+     - Add your keys with the appropriate names.
+
+#### Security Tips
+- **Never Share API Keys**: Never commit API keys to version control (e.g., GitHub).
+- **Use Restrictions**: When possible, restrict your API keys by IP address or by limiting their permissions.
+
+#### If you run into any issues with obtaining or using the keys, consult the respective service’s documentation for more detailed troubleshooting steps and then contact us via discussions/Issues for final resolution.
