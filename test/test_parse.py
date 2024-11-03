@@ -1,62 +1,118 @@
-# From https://stackoverflow.com/questions/25827160/importing-correctly-with-pytest
-# Change current working directory so test case can find the source files
-import sys, os
-sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/../src"))
+"""
+Module for testing parsing functions.
+
+This module contains unit tests for the parsing functionalities
+implemented in the parse.match module.
+"""
+
+import sys
+import os
 import datetime
 import string
+from random import randint, choices
 
 import pytest
-from random import randint, choices
 
 from parse.match import parse_period
 
 NUM_ITER = 1000
 
-# Generate one random datetime object between an uniform range
-def random_datetime(start = 2020, end = 2025):
-    # Determine all posible days between the start and end
-    start = datetime.date(start, 1, 1)
-    end = datetime.date(end, 12, 31)
+def random_datetime(start_year=2020, end_year=2025):
+    """
+    Generate a random datetime object within a specified range.
 
-    # Give me one of them at random
-    choices = end - start
-    chosen_day = randint( 0, choices.days )
+    Args:
+        start_year (int, optional): The starting year. Defaults to 2020.
+        end_year (int, optional): The ending year. Defaults to 2025.
+
+    Returns:
+        datetime.datetime: A randomly generated datetime object.
+    """
+    # Determine all possible days between the start and end
+    start_date = datetime.date(start_year, 1, 1)
+    end_date = datetime.date(end_year, 12, 31)
+
+    # Calculate the total number of days
+    delta_days = (end_date - start_date).days
+
+    # Choose a random day
+    chosen_day = randint(0, delta_days)
 
     # Randomly pick a time
-    h = randint(0, 23)
-    m = randint(0, 59)
+    hour = randint(0, 23)
+    minute = randint(0, 59)
 
     # Get the random date
-    date = start + datetime.timedelta(days = chosen_day)
+    date = start_date + datetime.timedelta(days=chosen_day)
 
-    # add time
-    return datetime.datetime(date.year, date.month, date.day, h, m)
+    # Combine date and time
+    return datetime.datetime(
+        date.year,
+        date.month,
+        date.day,
+        hour,
+        minute
+    )
 
-def to_military(d):
-    return f"{d.month:02.0f}/{d.day:02.0f}/{d.year:4.0f} {d.hour}:{d.minute:02.0f}"
+def to_military(dt):
+    """
+    Convert a datetime object to a military time string.
 
-def to_12hour(d):
-    ampm = "am" if d.hour < 12 else "pm"
-    hour = d.hour % 12
-    if hour == 0: hour += 12
-    return f"{d.month:02.0f}/{d.day:02.0f}/{d.year:4.0f} {hour}:{d.minute:02.0f} {ampm}"
+    Args:
+        dt (datetime.datetime): The datetime object.
+
+    Returns:
+        str: Formatted datetime string in military time.
+    """
+    return f"{dt.month:02}/{dt.day:02}/{dt.year} {dt.hour}:{dt.minute:02}"
+
+def to_12hour(dt):
+    """
+    Convert a datetime object to a 12-hour time string.
+
+    Args:
+        dt (datetime.datetime): The datetime object.
+
+    Returns:
+        str: Formatted datetime string in 12-hour time.
+    """
+    ampm = "am" if dt.hour < 12 else "pm"
+    hour = dt.hour % 12
+    if hour == 0:
+        hour = 12
+    return f"{dt.month:02}/{dt.day:02}/{dt.year} {hour}:{dt.minute:02} {ampm}"
 
 def period_to_string(date1, date2):
-    # Convert dates to string input
-    s = ""
-    for d in [date1, date2]:
-        # 50% chance of military or 12 hour
-        if randint(0, 1) == 0:
-            s += to_military(d)
-        else:
-            s += to_12hour(d)
-        s += " "
-    return s
+    """
+    Convert two datetime objects to a period string.
 
-# Test correct date times
+    Each date has a 50% chance of being in military or 12-hour format.
+
+    Args:
+        date1 (datetime.datetime): The first datetime object.
+        date2 (datetime.datetime): The second datetime object.
+
+    Returns:
+        str: The period string representing date1 to date2.
+    """
+    s = ""
+    for dt in [date1, date2]:
+        # 50% chance of military or 12-hour format
+        if randint(0, 1) == 0:
+            s += to_military(dt)
+        else:
+            s += to_12hour(dt)
+        s += " "
+    return s.strip()
+
 def test_correct():
-    # Do this test 1000 times
-    for i in range(NUM_ITER):
+    """
+    Test parsing of correct date periods.
+
+    This test generates random valid date periods and verifies that
+    the parse_period function correctly parses them into the original datetime objects.
+    """
+    for _ in range(NUM_ITER):
         # Pick 2 random dates
         date1 = random_datetime()
         date2 = random_datetime()
@@ -64,18 +120,20 @@ def test_correct():
 
         s = period_to_string(date1, date2)
         
-        # Parse input
-        # No try, we know input should be correct
+        # Parse input; expecting correct parsing
         res_date1, res_date2 = parse_period(s)
 
-        assert res_date1 == date1
-        assert res_date2 == date2
+        assert res_date1 == date1, f"Expected {date1}, got {res_date1}"
+        assert res_date2 == date2, f"Expected {date2}, got {res_date2}"
 
-# Test inverted date times
-# i.e. start date is AFTER ending
 def test_swapped():
-    # Do this test 1000 times
-    for i in range(NUM_ITER):
+    """
+    Test parsing with inverted date periods (start date after end date).
+
+    This test generates date periods where the start date is after the end date
+    and verifies that parse_period raises a ValueError with the appropriate message.
+    """
+    for _ in range(NUM_ITER):
         # Pick 2 random dates
         date1 = random_datetime()
         date2 = random_datetime()
@@ -83,67 +141,64 @@ def test_swapped():
 
         s = period_to_string(date1, date2)
 
-        # It should fail, throw if it does pass
-        try:
-            res_date1, res_date2 = parse_period(s)
-            assert False
-        except Exception as e:
-            assert str(e) == "your starting date is after your ending date"
+        # It should fail; ensure exception is raised
+        with pytest.raises(ValueError, match="your starting date is after your ending date"):
+            parse_period(s)
 
-# Tests if user inputs an impossible date
-# 29 feb in a non-leap year
-# 30 feb
-# 31 of shorter months
 def test_impossible():
-    cases = [(2, 29, 2023), (2, 30, 2024)]
-    cases += [(x, 31, 2022) for x in [2, 4, 6, 9, 11]]
+    """
+    Test parsing of impossible dates (e.g., Feb 30, Feb 29 in non-leap years).
 
-    # Test as ending dates
-    for mm, dd, yyyy in cases:
+    This test attempts to parse date periods with invalid dates and verifies
+    that parse_period raises a ValueError with the appropriate message.
+    """
+    # Define invalid date cases
+    invalid_cases = [
+        (2, 29, 2023),  # Non-leap year
+        (2, 30, 2024),  # Even in leap year, Feb 30 doesn't exist
+    ]
+    # Add months that don't have 31 days
+    invalid_cases += [(month, 31, 2022) for month in [2, 4, 6, 9, 11]]
+
+    # Test invalid ending dates
+    for mm, dd, yyyy in invalid_cases:
         date1 = random_datetime(2020, 2021)
         
-        s = to_military(date1)
-        s += " "
-        s += f"{mm:02.0f}/{dd:02.0f}/{yyyy:4.0f} 0:00"
+        s = to_military(date1) + " " + f"{mm:02}/{dd:02}/{yyyy} 0:00"
 
-        # It should fail, throw if it does pass
-        try:
-            res_date1, res_date2 = parse_period(s)
-            assert False
-        except Exception as e:
-            assert str(e) == "your entered date is not possible"
+        # It should fail; ensure exception is raised
+        with pytest.raises(ValueError, match="your entered date is not possible"):
+            parse_period(s)
     
-    # Test as starting dates
-    for mm, dd, yyyy in cases:
+    # Test invalid starting dates
+    for mm, dd, yyyy in invalid_cases:
         date2 = random_datetime(2025, 2026)
         
-        s = f"{mm:02.0f}/{dd:02.0f}/{yyyy:4.0f} 0:00"
-        s += " "
-        s += to_military(date2)
+        s = f"{mm:02}/{dd:02}/{yyyy} 0:00 " + to_military(date2)
 
-        # It should fail, throw if it does pass
-        try:
-            res_date1, res_date2 = parse_period(s)
-            assert False
-        except Exception as e:
-            assert str(e) == "your entered date is not possible"
+        # It should fail; ensure exception is raised
+        with pytest.raises(ValueError, match="your entered date is not possible"):
+            parse_period(s)
 
-# Generate random noise
-# Random text generation from https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits
 def gibberish():
-    text = ''.join(choices(string.ascii_uppercase + string.ascii_letters + " /:"
-        , k=randint(0, 62)))
-    return text
+    """
+    Generate a random string with uppercase, lowercase letters, and some symbols.
 
-# Just test random input
+    Returns:
+        str: A randomly generated string.
+    """
+    return ''.join(choices(string.ascii_letters + " /:", k=randint(0, 62)))
+
 def test_gibberish():
-    for i in range(NUM_ITER):
+    """
+    Test parsing with random, nonsensical input.
+
+    This test generates random strings that do not conform to expected date formats
+    and verifies that parse_period raises an exception.
+    """
+    for _ in range(NUM_ITER):
         s = gibberish()
 
-        # It should fail, throw if it does pass
-        try:
-            res_date1, res_date2 = parse_period(s)
-            assert False
-        except Exception as e:
-            # Many reasons why parser could fail, just accept any failure
-            assert True
+        # It should fail; ensure exception is raised
+        with pytest.raises(Exception):
+            parse_period(s)
