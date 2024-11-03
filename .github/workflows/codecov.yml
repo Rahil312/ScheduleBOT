@@ -5,10 +5,10 @@ name: Code Coverage
 on:
   push:
     branches:
-      - fall_2024
+      - '*'
   pull_request:
     branches:
-      - fall_2024
+      - '*'
 
 jobs:
   build:
