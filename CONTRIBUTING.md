@@ -84,3 +84,10 @@ Please follow the [PEP8 guide](https://www.python.org/dev/peps/pep-0008/) for Py
 
 ### Documentation
 - Use pdoc3
+
+### Contact Us:
+In case there is some persistent bug, please feel free to contact group - 63
+•	Rohan Mehul Champaneri - rchampa2@ncsu.edu
+•	Rahil Hardik Shukla - rshukla7@ncsu.edu
+•	Karan Shaunak Patel - kpatel49@ncsu.edu
+
