@@ -849,6 +849,19 @@ async def view_list(ctx):
                            for idx, task in enumerate(todo_lists[user_id])])
         await ctx.send(f"📋 **Your To-Do List:**\n{tasks}")
 
+# Command to remove a task
+@bot.command(name="remove")
+async def remove_task(ctx, task_number: int):
+    user_id = ctx.author.id
+    if user_id not in todo_lists or not todo_lists[user_id]:
+        await ctx.send("❌ Your to-do list is empty!")
+    else:
+        try:
+            removed_task = todo_lists[user_id].pop(task_number - 1)
+            await ctx.send(f"🗑️ Task removed: **{removed_task['name']}** (Deadline: {removed_task['deadline'].strftime('%Y-%m-%d %H:%M')})")
+        except IndexError:
+            await ctx.send("❌ Invalid task number!")
+
 # ----------------------- Main Execution -----------------------
 
 if __name__ == "__main__":
