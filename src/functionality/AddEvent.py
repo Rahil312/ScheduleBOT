@@ -13,8 +13,29 @@ from src.functionality.shared_functions import create_event_tree, create_type_tr
 from src.functionality.create_event_type import create_event_type
 from src.functionality.distance import get_distance
 from src.Event import Event
+# Email sender functionality
+def send_email(to_email, subject, body):
+    """Send an email using SMTP."""
+    from_email = "noreplywolfjobs@gmail.com"
+    from_password = "dkbe ifbr jtra ojed"
 
+    try:
+        # Email setup
+        msg = MIMEMultipart()
+        msg['From'] = from_email
+        msg['To'] = to_email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain'))
 
+        # Connect to SMTP server and send email
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(from_email, from_password)
+            server.sendmail(from_email, to_email, msg.as_string())
+            logger.info(f"Email sent successfully to {to_email}")
+
+    except Exception as e:
+        logger.error(f"Failed to send email to {to_email}: {e}")
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
