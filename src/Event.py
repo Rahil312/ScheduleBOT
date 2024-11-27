@@ -1,9 +1,9 @@
 class Event:
 
-    def __init__(self, name, start_date, end_date, priority, event_type, description,location="None"):
+    def _init_(self, name, start_date, end_date, priority, event_type,gmeet="None",location="None", description="done"):
         """
         Function:
-            __init__
+            _init_
         Description:
             Creates a new Event object instance
         Input:
@@ -24,11 +24,12 @@ class Event:
         self.event_type = event_type
         self.description = description
         self.location=location
+        self.gmeet= gmeet
 
-    def __str__(self):
+    def _str_(self):
         """
         Function:
-            __str__
+            _str_
         Description:
             Converts an Event object into a string
         Input:
@@ -47,16 +48,18 @@ class Event:
             + " "
             + self.event_type
             + " "
-            + self.description
+            + self.gmeet
             + " "
             + self.location
+            + " "
+            + self.description
         )
         return output
 
-    def __lt__(self, other):
+    def _lt_(self, other):
         """
         Function:
-            __lt__
+            _lt_
         Description:
             Finds whether the current event starts before another
         Input:
@@ -68,10 +71,10 @@ class Event:
         """
         return self.start_date < other.start_date
 
-    def __le__(self, other):
+    def _le_(self, other):
         """
         Function:
-            __le__
+            _le_
         Description:
             Finds whether the current event starts before or at the same time as another
         Input:
@@ -83,10 +86,10 @@ class Event:
         """
         return self.start_date <= other.start_date
 
-    def __gt__(self, other):
+    def _gt_(self, other):
         """
         Function:
-            __gt__
+            _gt_
         Description:
             Finds whether the current event starts after another
         Input:
@@ -98,10 +101,10 @@ class Event:
         """
         return self.start_date > other.start_date
 
-    def __ge__(self, other):
+    def _ge_(self, other):
         """
         Function:
-            __ge__
+            _ge_
         Description:
             Finds whether the current event starts after or at the same time as another
         Input:
@@ -145,5 +148,5 @@ class Event:
         Output:
             array - A list with each index being an attribute of the self Event object
         """
-        array = [self.name, str(self.start_date), str(self.end_date), str(self.priority), self.event_type, self.description,self.location]
+        array = [self.name, str(self.start_date), str(self.end_date), str(self.priority), self.event_type, self.gmeet, self.location, self.description]
         return array
