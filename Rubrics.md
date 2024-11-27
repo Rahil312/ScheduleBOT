@@ -1,8 +1,8 @@
 # Project Name: Schedule Bot
 ## SE Group 63
-- Rahil Hardik Shukla - rshukla7
 - Rohan Mehul Champaneri- rchampa2
-- Karan Shaunak Patel - dpendya
+- Rahil Hardik Shukla - rshukla7
+- Karan Shaunak Patel - kpatel49
 #### Project link: [https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features](https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features)
 
 ## Rubrics
@@ -21,11 +21,11 @@
 | Docs: why: docs tell a story, motivate the whole thing, deliver a punchline that makes you want to rush out and use the thing | 3 | 3 | 3 | <p>[Documentation](https://github.com/Rahil312/ScheduleBOT/blob/Group63_Project3_New_Features/README.md)</p> |
 | Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code. | 3 | 3 | 3 |[Documentation](https://github.com/Rahil312/ScheduleBOT/blob/Group63_Project3_New_Features/README.md)|
 | Use of version control tools | 3 | 3 | 3 | [Github](https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features ) |
-| Test cases exist | 3 | 3 | 3 | [CodeCov](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/test) |
-| Test cases are routinely executed | 3 | 3 | 3 | <br>[File1](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/test) |
+| Test cases exist | 3 | 3 | 3 |[Test Cases ](https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features/test  ) |
+| Test cases are routinely executed | 3 | 3 | 3 | [Test Cases ](https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features/test  ) |
 | Issues are discussed before they are closed | 3 | 3 | 3 | <p>[Chat Channel](https://docs.google.com/document/d/1T0sRlVpf6Hm4aRlrQ3YLZnENDQnRVq3nXWIgHrZJVlg/edit?usp=sharing )  </p> | 
 | Chat channel: exists | 3 | 3 | 3 | [Chat Channel](https://docs.google.com/document/d/1T0sRlVpf6Hm4aRlrQ3YLZnENDQnRVq3nXWIgHrZJVlg/edit?usp=sharing ) |
-| Test cases: a large proportion of the issues related to handling failing cases. | 3 | 3 | 3 | [Test Cases](https://github.com/CSC510-Leslie-Tim-Deepak/SEProj-ScheduleBot/tree/fall_2024/test) |
+| Test cases: a large proportion of the issues related to handling failing cases. | 3 | 3 | 3 | [Test Cases ](https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features/test  ) |
 | Evidence that the whole team is using the same tools: everyone can get to all tools and files | 3 | 3 | 3 | [WorkFlows](https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features/.github/workflows ) |
 | Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people) | 3 | 3 | 3 | <p>[WorkFlows](https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features/.github/workflows ) </p> |
 | Evidence that the whole team is using the same tools (e.g. tutor can ask anyone to share screen, they demonstrate the system running on their computer) | 3 | 3 | 3 | https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features  |
@@ -108,9 +108,9 @@
 | <p>13.1) Does your project have resources (e.g. blog, Twitter, RSS feed, Facebook page, wiki, mailing list) that are regularly updated with information about your software?</p><p>e.g. release announcements, publications, workshops, conference presentations</p><p></p> | YES | YES | YES |   |
 | 13.2)  Does your website state how many projects and users are associated with your project? | YES | YES | YES |   |
 | 13.3) Do you provide success stories on your website?| YES | YES | YES |   |
-| 13.4) Do you list your important partners and collaborators on your website? | N/A | N/A | N/A |   |
-| 13.5) Do you list your project's publications on your website or link to a resource where these are available? | NO | NO | NO |   |
-| 13.6) Do you list third-party publications that refer to your software on your website or link to a resource where these are available? | NO | NO | NO |   |
+| 13.4) Do you list your important partners and collaborators on your website?| YES | YES | YES |   |
+| 13.5) Do you list your project's publications on your website or link to a resource where these are available?| YES | YES | YES |   |
+| 13.6) Do you list third-party publications that refer to your software on your website or link to a resource where these are available? | YES | YES | YES |   |
 | 13.7) Can users subscribe to notifications to changes to your source code repository? | YES | YES | YES | <p></p><p></p> |
 | 13.8) If your software is developed as an open source project (and not just a project developing open source software), do you have a governance model? | YES | YES | YES |   |
 | Q14 - How you manage contributions |   |   |   |   |
