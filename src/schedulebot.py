@@ -400,6 +400,7 @@ async def send_help_embed(ctx):
     em.add_field(name="!syncEvents [passkey]", value="Synchronizes your Google Calendar events to local storage", inline=False)
     em.add_field(name="!clearData [passkey]", value="Deletes all event data (Owner Only)", inline=False)
     em.add_field(name="!stop [passkey]", value="Stops the bot (Owner Only)", inline=False)
+    em.add_field(name="!add <task>", value="Adds a new task to your to-do list", inline=False)
     await ctx.send(embed=em)
 
 @bot.event
@@ -788,6 +789,54 @@ async def freetime(ctx):
         traceback.print_exc()
         logger.error(f"Error in freetime command: {e}", exc_info=True)
         await ctx.send("Sorry, an error occurred while retrieving your free time.")
+
+
+# Dictionary to store to-do lists with name, deadline, and description
+todo_lists = {}
+
+#Command to add a task with name, deadline (date + time), and description
+@bot.command(name="add")
+async def add_task(ctx):
+    user_id = ctx.author.id
+    
+    # Ask for the task name
+    await ctx.send("Please enter the name of the task:")
+    name_msg = await bot.wait_for('message', check=lambda message: message.author == ctx.author)
+    name = name_msg.content
+    
+    # Ask for the task deadline (date + time)
+    await ctx.send("Please enter the deadline for the task in the format `YYYY-MM-DD HH:MM` (e.g., 2024-12-01 15:30):")
+    deadline_msg = await bot.wait_for('message', check=lambda message: message.author == ctx.author)
+    deadline = deadline_msg.content
+    
+    # Validate and parse the deadline
+    try:
+        # Try to convert the deadline to a datetime object
+        deadline_time = datetime.strptime(deadline, "%Y-%m-%d %H:%M")
+    except ValueError:
+        await ctx.send("❌ Invalid deadline format! Please use the format `YYYY-MM-DD HH:MM`.")
+        return
+    
+    # Ask for the task description
+    await ctx.send("Please enter a description for the task:")
+    description_msg = await bot.wait_for('message', check=lambda message: message.author == ctx.author)
+    description = description_msg.content
+    
+    # Store the task in the user's to-do list
+    if user_id not in todo_lists:
+        todo_lists[user_id] = []
+    
+    task = {
+        "name": name,
+        "deadline": deadline_time,  # Store as datetime object
+        "description": description
+    }
+    todo_lists[user_id].append(task)
+    
+    # Confirm task was added
+    await ctx.send(f"✅ Task added: **{name}** (Deadline: {deadline_time.strftime('%Y-%m-%d %H:%M')})\nDescription: {description}")
+
+
 
 # ----------------------- Main Execution -----------------------
 
