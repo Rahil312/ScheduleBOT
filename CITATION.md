@@ -7,17 +7,17 @@ If citing our project, please use the following formats:
 ```
 bibtex
 @misc{ScheduleBot,
-  author = {L. Villalobos-Arias, C. Smith, Ashwith, R. Ramakrishnan, V. Agrawal, M. Alahmadi, Q. Chen, N. Rajapaksha, J. Wright, and J. Yang},
+  author = {Rahil Hardik Shukla, Karan Shaunak Patel, Rohan Mehul Champneri},
   title = {ScheduleBot},
-  year = {2021},
+  year = {2024},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/qchen59/ScheduleBot}},
+  howpublished = {\url{[https://github.com/qchen59/ScheduleBot](https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features)}},
   doi = {10.5281/zenodo.5602103}
 }
 ```
 
 ## Textual
 
-L. Villalobos-Arias, C. Smith, Ashwith, R. Ramakrishnan, V. Agrawal, M. Alahmadi, Q. Chen, N. Rajapaksha, J. Wright, and J. Yang. 2021. 
-ScheduleBot. https://github.com/qchen59/ScheduleBot
+Rahil Hardik Shukla, Karan Shaunak Patel, Rohan Mehul Champneri. 2024. 
+ScheduleBot. https://github.com/Rahil312/ScheduleBOT/tree/Group63_Project3_New_Features
