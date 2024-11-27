@@ -862,6 +862,16 @@ async def remove_task(ctx, task_number: int):
         except IndexError:
             await ctx.send("❌ Invalid task number!")
 
+# Command to clear the to-do list
+@bot.command(name="clear")
+async def clear_list(ctx):
+    user_id = ctx.author.id
+    if user_id not in todo_lists or not todo_lists[user_id]:
+        await ctx.send("🧹 Your to-do list is already empty!")
+    else:
+        todo_lists[user_id].clear()
+        await ctx.send("🧹 Your to-do list has been cleared!")
+
 # ----------------------- Main Execution -----------------------
 
 if __name__ == "__main__":
