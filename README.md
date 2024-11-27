@@ -178,8 +178,8 @@ To look for event summary:
 -   [v3.0](https://github.com/SEProjGrp5/ScheduleBot/releases) Finalized version 3, check out what's new in V3
 -   [v4.0](https://github.com/A1231/SEProjGrp6-ScheduleBot/releases) Finalized version 4, check out what's new in V4!
 -   [v5.0](https://github.com/A1231/SEProjGrp6-ScheduleBot/releases) Finalized version 5, check out what's new in V4!
-
-
+-   [v6.0] Finalized version 6; check out what's new in V6!
+-   [v7.0] Finalized version 7; check out what's new in V7!
 :dizzy: Features in V2:
 ---
 
@@ -478,6 +478,16 @@ https://github.com/user-attachments/assets/91be8c5a-719e-4dbe-952c-6b6506b17bec
 We’ve added error handling to Schedule Bot. Now, if the bot encounters an issue, it won’t stop running. Instead, it will display an error message and continue processing your next command. We also introduced a logging function to Schedule Bot, which now records the result of every command. This feature allows you to review past interactions and helps us improve troubleshooting by providing a clear record of each command’s outcome. Finally, this project emphasizes modular, refactored code by organizing each function into clear, manageable modules. Core logic like event handling, data storage, and Google Calendar integration is separated within a functionality folder, with shared utilities for data encryption, file handling, and other common tasks in a shared_functions module. The main bot logic in schedulebot.py accesses these modules, making the bot easier to update, troubleshoot, and scale.
 
 https://github.com/user-attachments/assets/28e0dca5-1abb-455d-9bff-03e6e36263aa
+
+
+#  :ghost: What's new in V7:
+
+## New Functionalities
+1. **Auto-Generated Virtual Meeting Link**: For virtual meetings, the bot streamlines the scheduling process by automatically creating a Google Meet link and attaching it to the event in the user's Google Calendar. This eliminates the hassle of manually generating or sharing meeting links, ensuring a seamless and well-organized scheduling experience for all participants.
+2. **Event Notifications via Email**: Every time a new meeting is scheduled, the bot enhances communication by sending a detailed email to the user. These emails include all critical information, such as the meeting time, a brief description of the agenda, the physical location (if it's an in-person meeting), and the Google Meet link for online meetings. This ensures that users are well informed and prepared for their meetings, with all the necessary details readily available.
+3. **Integrated "Tasks" List Management**: The bot features a robust "Tasks" functionality, a to-do list functionality, allowing users to efficiently manage their tasks. Users can easily add new tasks to their list, delete completed tasks, view their current list of pending tasks, and clear the entire list when needed. This provides a centralized platform for task management, ensuring nothing is overlooked.
+4. **Deadline and Reminder Integration**: For tasks added to the to-do list, the bot takes it a step further by syncing its deadlines with the user's Google Calendar. Additionally, it ensures users never miss a deadline by sending timely reminders **60 minutes** and **10 minutes** before the task is due. This feature helps users stay on top of their commitments and manage their time effectively.
+5. **Collaborative Meeting Management**: When a meeting involves multiple participants, the bot automatically syncs the event to Google Calendar, listing all collaborators for clarity and coordination. Furthermore, each participant receives a detailed email with the meeting's essential details, including the time, agenda, physical or virtual location, and a Google Meet link if it's an online meeting. This feature ensures all attendees are on the same page and simplifies collaborative scheduling.
 
 ## Future Scope
 
