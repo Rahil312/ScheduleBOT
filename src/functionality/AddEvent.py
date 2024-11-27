@@ -60,11 +60,16 @@ def check_complete(start, start_date, end, end_date, array):
     else:
         return False
         
+# Include the Gmail API scope
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+# SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.send']
+
+
 async def add_event(ctx, client):
     """
     Function: add_event
     Walks a user through the event creation process, captures inputs interactively,
-    and adds the event to Google Calendar and local storage.
+    and adds the event to Google Calendar and local storage with optional Google Meet.
     """
     channel = await ctx.author.create_dm()
 
@@ -150,16 +155,29 @@ async def add_event(ctx, client):
         await channel.send("You took too long to respond. Event creation cancelled.")
         return
 
-    # Location
-    await channel.send("What is the location of the event? (Type 'None' for no location)")
+    # Google Meet
+    await channel.send("Is the event virtual? (Type 'gmeet' for Google Meet or 'None' if not virtual)")
     try:
         event_msg = await client.wait_for("message", check=check, timeout=60)
-        location = event_msg.content.strip()
-        event_array.append(location)
+        gmeet = event_msg.content.strip().lower()
+        event_array.append(gmeet)
     except asyncio.TimeoutError:
         await channel.send("You took too long to respond. Event creation cancelled.")
         return
 
+    # Location
+    location = 'none'
+    if gmeet != 'gmeet':
+        await channel.send("What is the location of the event? (Type 'None' for no location)")
+        try:
+            event_msg = await client.wait_for("message", check=check, timeout=60)
+            location = event_msg.content.strip()
+            event_array.append(location)
+        except asyncio.TimeoutError:
+            await channel.send("You took too long to respond. Event creation cancelled.")
+            return
+    else:
+        event_array.append('Online')
     # Travel Time
     if location.lower() != 'none':
         await channel.send("Do you want to block travel time for this event? (Yes/No)")
@@ -225,8 +243,8 @@ async def add_event(ctx, client):
         service = build('calendar', 'v3', credentials=creds)
         new_event = {
             'summary': event_array[0],
-            'location': event_array[5],
-            'description': event_array[6],
+            'location': event_array[6],
+            'description': event_array[7],
             'start': {
                 'dateTime': event_array[1].strftime("%Y-%m-%dT%H:%M:%S"),
                 'timeZone': 'America/New_York'
