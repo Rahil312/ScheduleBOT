@@ -246,6 +246,32 @@ async def add_event(ctx, client):
         event = service.events().insert(calendarId='primary', body=new_event).execute()
         event_id = event.get('id')
         event_link = event.get('htmlLink')
+
+
+        # FOr sending email notification to user
+        user_email = 'rahilshukla3@gmail.com'  # Assuming user email is accessible via credentials
+
+        email_subject = "Your Event Was Created Successfully"
+        email_body = f"""
+        Hello,
+
+        Your event '{event_array[0]}' has been created successfully on Google Calendar.
+
+        Event Details:
+        - Name: {event_array[0]}
+        - Start: {event_array[1].strftime("%Y-%m-%d %H:%M:%S")}
+        - End: {event_array[2].strftime("%Y-%m-%d %H:%M:%S")}
+        - Location: {event_array[7]}
+        - Description: {event_array[8]}
+        - Event Link: {event_link}
+        - Google Meet Link: {meet_link}
+
+        Regards,
+        ScheduleBot
+        """
+        send_email(user_email, email_subject, email_body)
+
+        
         logger.info(f"Event created: {event_link}")
     except Exception as e:
         logger.error("An error occurred while creating the event in Google Calendar.")
