@@ -10,6 +10,8 @@ import traceback
 import logging
 from discord.ui import Button, View
 import requests
+from datetime import datetime
+import pickle
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "./")))
 from functionality.recommend_event import recommend_event
@@ -836,7 +838,16 @@ async def add_task(ctx):
     # Confirm task was added
     await ctx.send(f"✅ Task added: **{name}** (Deadline: {deadline_time.strftime('%Y-%m-%d %H:%M')})\nDescription: {description}")
 
-
+# Command to view the to-do list with name, deadline, and description
+@bot.command(name="list")
+async def view_list(ctx):
+    user_id = ctx.author.id
+    if user_id not in todo_lists or not todo_lists[user_id]:
+        await ctx.send("📋 Your to-do list is empty!")
+    else:
+        tasks = "\n".join([f"{idx+1}. **{task['name']}** (Deadline: {task['deadline'].strftime('%Y-%m-%d %H:%M')})\n  Description: {task['description']}" 
+                           for idx, task in enumerate(todo_lists[user_id])])
+        await ctx.send(f"📋 **Your To-Do List:**\n{tasks}")
 
 # ----------------------- Main Execution -----------------------
 
