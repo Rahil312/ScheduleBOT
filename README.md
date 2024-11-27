@@ -479,13 +479,21 @@ We’ve added error handling to Schedule Bot. Now, if the bot encounters an issu
 
 https://github.com/user-attachments/assets/28e0dca5-1abb-455d-9bff-03e6e36263aa
 
+## Future Scope
+
+**Ride Integration for Meetings** : For in-person meetings, ScheduleBot can redirect users to the Uber app or webpage, displaying fare estimates based on the user's current location and the meeting destination.
+
+**Class Schedule Integration** : Seamlessly connect the MyPack Portal with ScheduleBot to automatically import a student’s class schedule and sync it with Google Calendar.
+
+**Rest Time Recommendations** : If a user’s daily schedule exceeds a certain time limit, ScheduleBot can suggest appropriate rest periods and even set an alarm to ensure downtime.
+
+**Appointment Booking via Calendar** : Generate a shareable Google Calendar link, enabling others to book appointments automatically based on the user's availability.
+
 ## Collaborators
-Leslie Liu 
+Karan Shaunak Patel
 
+Rahil Hardik shukla
 
-Yiting Hou
-
-
-Deepak Sai Pendyala
+Rohan Mehul Champaneri
 
 
