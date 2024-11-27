@@ -12,12 +12,12 @@ from dateutil import parser
 from datetime import datetime
 import logging
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), ".../")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(_file_), ".../")))
 from src.Event import Event
 from src.functionality.Google import connect_google
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(_name_)
 
 
 def add_event_to_file_main(user_id, event_data):
@@ -47,8 +47,10 @@ def add_event_to_file_main(user_id, event_data):
         event_data['endDateTime'],
         event_data['priority'],
         event_data['type'],
-        event_data['desc'],
+        event_data['gmeet'],
+        event_data['collab'],
         event_data['location'],
+        event_data['desc'],
     ])
 
     # Write the updated events back to the file
@@ -72,7 +74,7 @@ async def fetch_google_events(ctx, max_results=10):
     # Use the updated connect_google function which handles user-specific credentials
     service = await connect_google(ctx)
     if service is None:
-        error_message = "Failed to connect to Google Calendar. Please try connecting again using `!ConnectGoogle`."
+        error_message = "Failed to connect to Google Calendar. Please try connecting again using !ConnectGoogle."
         await ctx.send(error_message)
         return None, error_message
 
@@ -107,6 +109,8 @@ def parse_google_event(event):
     summary = event.get('summary', 'No Title')
     description = event.get('description', 'None')
     location = event.get('location', 'None')
+    gmeet = event.get('gmeet', 'None')
+    collab = event.get('attendees', 'None')
 
     start = event['start'].get('dateTime', event['start'].get('date'))
     end = event['end'].get('dateTime', event['end'].get('date'))
@@ -123,8 +127,11 @@ def parse_google_event(event):
         'endDateTime': end_dt.strftime("%Y-%m-%d %H:%M:%S"),
         'priority': 'Medium',  # Default value, adjust as needed
         'type': 'GoogleCalendar',  # Indicate the source
-        'desc': description,
+        'gmeet':gmeet,
+        'collab':collab,
         'location': location,
+        'desc': description,
+
     }
 
     return local_event
@@ -452,14 +459,14 @@ def add_event_to_file(user_id, current, event_id):
 def delete_event_from_file(user_id, to_remove):
     rows = read_event_file(user_id)
     type_rows = read_type_file(user_id)
-    print("Rows: " + rows.__str__())
+    print("Rows: " + rows._str_())
 
     for row in rows:
         if to_remove['name'] == row[1]:
             rows.remove(row)
 
     for type_row in type_rows:
-        print("Type Row " + type_row.__str__())
+        print("Type Row " + type_row._str_())
         if to_remove['desc'] == str(type_row[0]):
             type_rows.remove(type_row)
 
