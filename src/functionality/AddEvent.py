@@ -224,49 +224,63 @@ async def add_event(ctx, client):
         event_array.append(description)
 
     # Adding to Google Calendar
-    try:
-        SCOPES = ['https://www.googleapis.com/auth/calendar']
-        base_dir = os.path.dirname(os.path.abspath(__file__))      # ...\src
-        parent_dir = os.path.dirname(base_dir)                     # ...\SEProj-ScheduleBot-main
-        json_dir = os.path.join(parent_dir, "json")               # ...\json
-        
-        user_id = str(ctx.author.id)
-        user_token_file = os.path.join(json_dir, "tokens", f"{user_id}_token.json")  # user-specific token path
+    SCOPES = ['https://www.googleapis.com/auth/calendar']
+    base_dir = os.path.dirname(os.path.abspath(_file_))      # ...\src
+    parent_dir = os.path.dirname(base_dir)                     # ...\SEProj-ScheduleBot-main
+    json_dir = os.path.join(parent_dir, "json")
+    
+    user_id = str(ctx.author.id)
+    user_token_file = os.path.join(json_dir, "tokens", f"{user_id}_token.json")  # user-specific token path
 
+    if os.path.exists(user_token_file):
+        creds = Credentials.from_authorized_user_file(user_token_file, SCOPES)
+    else:
+        await channel.send("You are not logged into Google. Please login using the !ConnectGoogle command.")
+        return
 
-        if os.path.exists(user_token_file):
-            creds = Credentials.from_authorized_user_file(user_token_file, SCOPES)
-        else:
-            await channel.send("You are not logged into Google. Please login using the !ConnectGoogle command.")
-            return
+    service = build('calendar', 'v3', credentials=creds)
 
-        service = build('calendar', 'v3', credentials=creds)
-        new_event = {
-            'summary': event_array[0],
-            'location': event_array[6],
-            'description': event_array[7],
-            'start': {
-                'dateTime': event_array[1].strftime("%Y-%m-%dT%H:%M:%S"),
-                'timeZone': 'America/New_York'
-            },
-            'end': {
-                'dateTime': event_array[2].strftime("%Y-%m-%dT%H:%M:%S"),
-                'timeZone': 'America/New_York'
-            },
-            'reminders': {
-                'useDefault': False,
-                'overrides': [
-                    {'method': 'email', 'minutes': 60},
-                    {'method': 'popup', 'minutes': 5},
-                ]
+    # Event details
+    new_event = {
+        'summary': event_array[0],
+        'location': event_array[6],
+        'description': event_array[7],
+        'start': {
+            'dateTime': event_array[1].strftime("%Y-%m-%dT%H:%M:%S"),
+            'timeZone': 'America/New_York'
+        },
+        'end': {
+            'dateTime': event_array[2].strftime("%Y-%m-%dT%H:%M:%S"),
+            'timeZone': 'America/New_York'
+        },
+        'reminders': {
+            'useDefault': False,
+            'overrides': [
+                {'method': 'email', 'minutes': 60},
+                {'method': 'popup', 'minutes': 5},
+            ]
+        }
+    }
+
+    # Add Google Meet link if specified
+    if gmeet == 'gmeet':
+        new_event['conferenceData'] = {
+            'createRequest': {
+                'requestId': f"{event_array[0]}-{datetime.now().timestamp()}",
+                'conferenceSolutionKey': {'type': 'hangoutsMeet'},
+                'status': {'statusCode': 'success'}
             }
         }
-        event = service.events().insert(calendarId='primary', body=new_event).execute()
+
+    try:
+        event = service.events().insert(calendarId='primary', body=new_event, conferenceDataVersion=1).execute()
+        event_link = event.get('htmlLink')
+        meet_link = event.get('hangoutLink', 'None')
+        await channel.send(f"Your event was successfully created!\nEvent link: {event_link}\nGoogle Meet link: {meet_link}")
         event_id = event.get('id')
         event_link = event.get('htmlLink')
-
-
-        # FOr sending email notification to user
+        
+        # Send email notification to user
         user_email = 'rahilshukla3@gmail.com'  # Assuming user email is accessible via credentials
 
         email_subject = "Your Event Was Created Successfully"
@@ -279,8 +293,8 @@ async def add_event(ctx, client):
         - Name: {event_array[0]}
         - Start: {event_array[1].strftime("%Y-%m-%d %H:%M:%S")}
         - End: {event_array[2].strftime("%Y-%m-%d %H:%M:%S")}
-        - Location: {event_array[7]}
-        - Description: {event_array[8]}
+        - Location: {event_array[6]}
+        - Description: {event_array[7]}
         - Event Link: {event_link}
         - Google Meet Link: {meet_link}
 
@@ -288,13 +302,12 @@ async def add_event(ctx, client):
         ScheduleBot
         """
         send_email(user_email, email_subject, email_body)
-
-        
         logger.info(f"Event created: {event_link}")
     except Exception as e:
-        logger.error("An error occurred while creating the event in Google Calendar.")
-        await channel.send("An error occurred while creating the event in Google Calendar.")
-        return
+        logger.error(f"An error occurred while creating the event: {e}")
+        await channel.send("An error occurred while creating the event. Please try again.")
+        
+
 
     # Creating Event Object and Saving Locally
     try:
@@ -304,8 +317,9 @@ async def add_event(ctx, client):
             event_array[2],  # end_date
             event_array[3],  # priority
             event_array[4],  # event_type
-            event_array[6],  # description
-            event_array[5]   # location
+            event_array[5],   #gmeet
+            event_array[6],   # location
+            event_array[7]  # description
         )
         create_event_tree(user_id)
         add_event_to_file(user_id, current_event, event_id)
