@@ -10,14 +10,15 @@ import logging
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)  # Set to DEBUG for detailed logs
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(_name_)
 
 async def connect_google(ctx):
     SCOPES = ['https://www.googleapis.com/auth/calendar']
     creds = None
 
     # Define the directory where JSON files are stored
-    base_dir = os.path.dirname(os.path.abspath(__file__))      # ...\src
+    base_dir = os.path.dirname(os.path.abspath(_file_)) 
+    print(base_dir)     # ...\src
     logger.debug(f"Base directory: {base_dir}")
     parent_dir = os.path.dirname(base_dir)                     # ...\SEProj-ScheduleBot-main
     json_dir = os.path.join(parent_dir, "json")               # ...\json
