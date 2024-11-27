@@ -1,6 +1,6 @@
 class Event:
 
-    def _init_(self, name, start_date, end_date, priority, event_type,gmeet="None",location="None", description="done"):
+    def _init_(self, name, start_date, end_date, priority, event_type,gmeet="None",collab="None",location="None", description="done"):
         """
         Function:
             _init_
@@ -25,6 +25,7 @@ class Event:
         self.description = description
         self.location=location
         self.gmeet= gmeet
+        self.collab= collab
 
     def _str_(self):
         """
@@ -49,6 +50,8 @@ class Event:
             + self.event_type
             + " "
             + self.gmeet
+            + " "
+            +self.collab
             + " "
             + self.location
             + " "
@@ -148,5 +151,5 @@ class Event:
         Output:
             array - A list with each index being an attribute of the self Event object
         """
-        array = [self.name, str(self.start_date), str(self.end_date), str(self.priority), self.event_type, self.gmeet, self.location, self.description]
+        array = [self.name, str(self.start_date), str(self.end_date), str(self.priority), self.event_type, self.gmeet, self.collab, self.location, self.description]
         return array
