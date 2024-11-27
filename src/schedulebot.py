@@ -1,3 +1,4 @@
+from urllib.request import Request
 import discord  # type: ignore
 from discord.ext import commands  # type: ignore
 import os
@@ -12,6 +13,14 @@ from discord.ui import Button, View
 import requests
 from datetime import datetime
 import pickle
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+import googleapiclient.errors
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+from datetime import datetime, timedelta
+
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "./")))
 from functionality.recommend_event import recommend_event
@@ -403,6 +412,9 @@ async def send_help_embed(ctx):
     em.add_field(name="!clearData [passkey]", value="Deletes all event data (Owner Only)", inline=False)
     em.add_field(name="!stop [passkey]", value="Stops the bot (Owner Only)", inline=False)
     em.add_field(name="!add <task>", value="Adds a new task to your to-do list", inline=False)
+    em.add_field(name="!list", value="Displays your current to-do list", inline=False)
+    em.add_field(name="!remove <task_number>", value="Removes the specified task from your to-do list", inline=False)
+    em.add_field(name="!clear", value="Clears all tasks from your to-do list", inline=False)
     await ctx.send(embed=em)
 
 @bot.event
@@ -791,52 +803,96 @@ async def freetime(ctx):
         traceback.print_exc()
         logger.error(f"Error in freetime command: {e}", exc_info=True)
         await ctx.send("Sorry, an error occurred while retrieving your free time.")
-
+        
 
 # Dictionary to store to-do lists with name, deadline, and description
 todo_lists = {}
 
-#Command to add a task with name, deadline (date + time), and description
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+
 @bot.command(name="add")
 async def add_task(ctx):
     user_id = ctx.author.id
+    json_dir = "/Users/rahilshukla/Downloads/copy/src/json"  # Replace with the actual path to your JSON directory
+    user_token_file = os.path.join(json_dir, "tokens", f"{user_id}_token.json")
     
+    # Check if user is logged into Google
+    if not os.path.exists(user_token_file):
+        await ctx.send("❌ You are not logged into Google. Please login using the `!ConnectGoogle` command.")
+        return
+
+    # Load credentials
+    creds = Credentials.from_authorized_user_file(user_token_file, SCOPES)
+    if not creds.valid:
+        if creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            await ctx.send("❌ Token is invalid or expired. Please reconnect your Google account.")
+            return
+
+    # Google Calendar service
+    service = build('calendar', 'v3', credentials=creds)
+
     # Ask for the task name
     await ctx.send("Please enter the name of the task:")
     name_msg = await bot.wait_for('message', check=lambda message: message.author == ctx.author)
     name = name_msg.content
-    
+
     # Ask for the task deadline (date + time)
     await ctx.send("Please enter the deadline for the task in the format `YYYY-MM-DD HH:MM` (e.g., 2024-12-01 15:30):")
     deadline_msg = await bot.wait_for('message', check=lambda message: message.author == ctx.author)
     deadline = deadline_msg.content
-    
+
     # Validate and parse the deadline
     try:
-        # Try to convert the deadline to a datetime object
         deadline_time = datetime.strptime(deadline, "%Y-%m-%d %H:%M")
     except ValueError:
         await ctx.send("❌ Invalid deadline format! Please use the format `YYYY-MM-DD HH:MM`.")
         return
-    
+
     # Ask for the task description
     await ctx.send("Please enter a description for the task:")
     description_msg = await bot.wait_for('message', check=lambda message: message.author == ctx.author)
     description = description_msg.content
-    
-    # Store the task in the user's to-do list
-    if user_id not in todo_lists:
-        todo_lists[user_id] = []
-    
-    task = {
-        "name": name,
-        "deadline": deadline_time,  # Store as datetime object
-        "description": description
+
+    # Define the event details
+    new_event = {
+        'summary': name,
+        'description': description,
+        'start': {
+            'dateTime': deadline_time.strftime("%Y-%m-%dT%H:%M:%S"),
+            'timeZone': 'America/New_York'
+        },
+        'end': {
+            'dateTime': (deadline_time + timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%S"),  # Default 1-hour duration
+            'timeZone': 'America/New_York'
+        },
+        'reminders': {
+            'useDefault': False,
+            'overrides': [
+                {'method': 'email', 'minutes': 60},
+                {'method': 'popup', 'minutes': 10},
+            ]
+        }
     }
-    todo_lists[user_id].append(task)
-    
-    # Confirm task was added
-    await ctx.send(f"✅ Task added: **{name}** (Deadline: {deadline_time.strftime('%Y-%m-%d %H:%M')})\nDescription: {description}")
+
+    # Add the event to Google Calendar
+    try:
+        event = service.events().insert(calendarId='primary', body=new_event, conferenceDataVersion=1).execute()
+        event_link = event.get('htmlLink')
+        meet_link = event.get('hangoutLink', 'None')
+
+        # Confirm task was added
+        await ctx.send(
+            f"✅ Task added to Google Calendar!\n"
+            f"**{name}** (Deadline: {deadline_time.strftime('%Y-%m-%d %H:%M')})\n"
+            f"Description: {description}\n"
+            f"Event link: {event_link}\n"
+            f"Google Meet link: {meet_link}"
+        )
+    except Exception as e:
+        await ctx.send(f"❌ Failed to add the task to Google Calendar. Error: {str(e)}")
+
 
 # Command to view the to-do list with name, deadline, and description
 @bot.command(name="list")
@@ -871,6 +927,7 @@ async def clear_list(ctx):
     else:
         todo_lists[user_id].clear()
         await ctx.send("🧹 Your to-do list has been cleared!")
+
 
 # ----------------------- Main Execution -----------------------
 
