@@ -6,14 +6,17 @@ from datetime import datetime, timedelta
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 import asyncio
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), ".../")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(_file_), "../../")))
 from src.parse.match import parse_period, parse_period24
 from src.functionality.shared_functions import create_event_tree, create_type_tree, add_event_to_file, turn_types_to_string
 from src.functionality.create_event_type import create_event_type
 from src.functionality.distance import get_distance
 from src.Event import Event
-# Email sender functionality
+
 def send_email(to_email, subject, body):
     """Send an email using SMTP."""
     from_email = "noreplywolfjobs@gmail.com"
@@ -36,9 +39,11 @@ def send_email(to_email, subject, body):
 
     except Exception as e:
         logger.error(f"Failed to send email to {to_email}: {e}")
+        
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(_name_)
 
 def check_complete(start, start_date, end, end_date, array):
     """
@@ -59,7 +64,9 @@ def check_complete(start, start_date, end, end_date, array):
         return True
     else:
         return False
-        
+from email.mime.text import MIMEText
+import base64
+
 # Include the Gmail API scope
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 # SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.send']
@@ -165,6 +172,31 @@ async def add_event(ctx, client):
         await channel.send("You took too long to respond. Event creation cancelled.")
         return
 
+    #Collaborators
+    await channel.send("Enter Gmail addresses of Collaborators (separate multiple emails with commas). Type 'None' if there are no collaborators.")
+    try:
+        event_msg = await client.wait_for("message", check=check, timeout=60)
+        collaborators_input = event_msg.content.strip()
+        
+         # If 'None' is typed, skip collaborators
+        if collaborators_input.lower() == 'none':
+            collaborators = []
+            await channel.send("No collaborators added.")
+        else:
+            # Extract and validate Gmail addresses
+            potential_emails = [email.strip() for email in collaborators_input.split(",")]
+            collaborators = [email for email in potential_emails]
+            
+            await channel.send(f"Collaborators added: {', '.join(collaborators)}")
+        
+        # Append event details and collaborators
+        collab = potential_emails
+        event_array.append(collab)
+        
+    except asyncio.TimeoutError:
+        await channel.send("You took too long to respond. Event creation cancelled.")
+        return
+    
     # Location
     location = 'none'
     if gmeet != 'gmeet':
@@ -178,41 +210,6 @@ async def add_event(ctx, client):
             return
     else:
         event_array.append('Online')
-    # Travel Time
-    if location.lower() != 'none':
-        await channel.send("Do you want to block travel time for this event? (Yes/No)")
-        try:
-            event_msg = await client.wait_for("message", check=check, timeout=60)
-            travel_flag = event_msg.content.strip().lower()
-            if travel_flag == 'yes':
-                await channel.send("Enter the mode of transport (DRIVING, WALKING, BICYCLING, TRANSIT):")
-                mode_msg = await client.wait_for("message", check=check, timeout=60)
-                mode = mode_msg.content.strip().upper()
-
-                await channel.send("Enter source address:")
-                src_msg = await client.wait_for("message", check=check, timeout=60)
-                source = src_msg.content.strip()
-
-                travel_time, maps_link = get_distance(location, source, mode)
-                travel_start = event_array[1] - timedelta(seconds=travel_time)
-                travel_event = Event(
-                    name="Travel to " + event_array[0],
-                    start=travel_start,
-                    end=event_array[1],
-                    priority="1",
-                    event_type="Travel",
-                    description="",
-                    location=source
-                )
-                await channel.send("Your travel event was successfully created!")
-                await channel.send(f"Here is your Google Maps link for navigation: {maps_link}")
-                create_event_tree(str(ctx.author.id))
-                add_event_to_file(str(ctx.author.id), travel_event, "local_travel_event_id")
-        except asyncio.TimeoutError:
-            await channel.send("You took too long to respond. Skipping travel time.")
-        except Exception as e:
-            logger.error(f"An error occurred while adding travel time: {e}")
-            await channel.send(f"An error occurred while adding travel time: {e}")
 
     # Description
     await channel.send("Any additional description you want me to add about the event? If not, enter 'done'")
@@ -243,8 +240,8 @@ async def add_event(ctx, client):
     # Event details
     new_event = {
         'summary': event_array[0],
-        'location': event_array[6],
-        'description': event_array[7],
+        'location': event_array[7],
+        'description': event_array[8],
         'start': {
             'dateTime': event_array[1].strftime("%Y-%m-%dT%H:%M:%S"),
             'timeZone': 'America/New_York'
@@ -253,6 +250,7 @@ async def add_event(ctx, client):
             'dateTime': event_array[2].strftime("%Y-%m-%dT%H:%M:%S"),
             'timeZone': 'America/New_York'
         },
+        'attendees': [{'email': email} for email in event_array[6]],
         'reminders': {
             'useDefault': False,
             'overrides': [
@@ -293,8 +291,9 @@ async def add_event(ctx, client):
         - Name: {event_array[0]}
         - Start: {event_array[1].strftime("%Y-%m-%d %H:%M:%S")}
         - End: {event_array[2].strftime("%Y-%m-%d %H:%M:%S")}
-        - Location: {event_array[6]}
-        - Description: {event_array[7]}
+        - Collaborators: {event_array[6]}
+        - Location: {event_array[7]}
+        - Description: {event_array[8]}
         - Event Link: {event_link}
         - Google Meet Link: {meet_link}
 
@@ -302,6 +301,9 @@ async def add_event(ctx, client):
         ScheduleBot
         """
         send_email(user_email, email_subject, email_body)
+        for email in event_array[6]:
+            send_email(email, email_subject, email_body)
+            
         logger.info(f"Event created: {event_link}")
     except Exception as e:
         logger.error(f"An error occurred while creating the event: {e}")
@@ -318,8 +320,9 @@ async def add_event(ctx, client):
             event_array[3],  # priority
             event_array[4],  # event_type
             event_array[5],   #gmeet
-            event_array[6],   # location
-            event_array[7]  # description
+            event_array[6], #collab
+            event_array[7],   # location
+            event_array[8]  # description
         )
         create_event_tree(user_id)
         add_event_to_file(user_id, current_event, event_id)
